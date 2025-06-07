@@ -32,19 +32,30 @@ pipeline {
             }
         }
 
-        stage('Clone the Repo') {
-            steps {
-                deleteDir()
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/feature']],
-                    userRemoteConfigs: [[
-                        url: "git@github.com:thani2808/${params.APP_TYPE}-bastion.git",
-                        credentialsId: 'private-key-jenkins'
-                    ]]
-                ])
-            }
-        }
+	stage('Clone the Repo') {
+	    steps {
+	        script {
+	            def repoMap = [
+	                'nginx': 'dan-p81-bastion',
+	                'springboot': 'hello-world-bastion'
+	            ]
+	            def selectedRepo = repoMap[params.APP_TYPE]
+
+	            if (!selectedRepo) {
+	                error "Unknown APP_TYPE: ${params.APP_TYPE}"
+	            }
+
+	            checkout([
+	                $class: 'GitSCM',
+	                branches: [[name: '*/feature']],
+	                userRemoteConfigs: [[
+	                    url: "git@github.com:thani2808/${selectedRepo}.git",
+	                    credentialsId: 'private-key-jenkins'
+	                ]]
+	            ])
+	        }
+	    }
+	}
 
         stage('Build App') {
             when { expression { return params.APP_TYPE == 'springboot' } }
