@@ -116,7 +116,7 @@ docker stop ${env.CONTAINER_NAME} || true
 docker rm ${env.CONTAINER_NAME} || true
 docker rmi ${env.DOCKERHUB_REPO}:${params.ENVIRONMENT} || true
 docker pull ${env.DOCKERHUB_REPO}:${params.ENVIRONMENT}
-docker run -d --name ${env.CONTAINER_NAME} -p ${env.HOST_PORT}:${env.DOCKER_PORT} ${env.DOCKERHUB_REPO}:${params.ENVIRONMENT}
+docker run -d --name ${env.CONTAINER_NAME} -p ${env.HOST_PORT}:${env.HOST_PORT} ${env.DOCKERHUB_REPO}:${params.ENVIRONMENT} java -jar app.jar --server.port=${env.HOST_PORT}
 EOF
                     """
                 }
