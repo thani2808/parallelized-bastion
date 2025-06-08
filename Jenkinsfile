@@ -4,7 +4,7 @@ pipeline {
     parameters {
         choice(name: 'APP_TYPE', choices: ['springboot', 'nginx'], description: 'Type of app to deploy')
         choice(name: 'ENVIRONMENT', choices: ['dev', 'staging', 'prod'], description: 'Target environment')
-        string(name: 'BASTION_IP', defaultValue: '52.66.203.89', description: 'Bastion Host IP Address')
+        string(name: 'BASTION_IP', defaultValue: '225.225.225.225', description: 'Bastion Host IP Address')
         string(name: 'BASTION_USER', defaultValue: 'ubuntu', description: 'Bastion Host SSH Username')
     }
 
